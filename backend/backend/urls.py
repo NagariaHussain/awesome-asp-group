@@ -13,9 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.urls import path, re_path
 from django.contrib import admin
-from django.urls import path
+from django.views.generic import TemplateView
+from django.views.decorators.cache import never_cache
+
+
+vue_router = never_cache(TemplateView.as_view(template_name="index.html"))
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    # All remaining routes are handled by Vue SPA's router
+    re_path(r"^(?!admin|api|media|static|assets|ws).*$", vue_router, name="vuejs"),
 ]
