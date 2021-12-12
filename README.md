@@ -2,6 +2,14 @@
 
 Awesome repo for awesome team.
 
+## Contribution Notes:
+
+1. Use semmantic commits (e.g. `feat: My new feature`, `fix: An old bug` etc.).
+
+2. Use prettier for formatting frontend.
+
+3. Use black for python formatting.
+
 ## Setup
 
 1. Create and activate a new virtual environment
