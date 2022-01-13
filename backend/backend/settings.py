@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    "recruiting",
+    "rest_framework"
 ]
 
 MIDDLEWARE = [
