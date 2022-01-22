@@ -31,6 +31,8 @@ Awesome repo for awesome team.
    $ python backend/manage.py runserver
    ```
 
+> manage.py is a CLI tool provided by django to carry out tasks like data migrations, creating super users etc.
+
 ## For front-end development
 
 1. Install NodeJS (14+)
