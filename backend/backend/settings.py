@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "recruiting",
-    "rest_framework"
+    "user",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,13 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    "DEFAULT_PERMISSION_CLASSES": [],
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+}
+
 WSGI_APPLICATION = "backend.wsgi.application"
 
 
@@ -82,9 +90,42 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
+    },
+    "TEST": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "test_db.sqlite3",
+    },
 }
 
+# LOGGING (Console & File). NOTSET = all levels
+LOGGING = {
+    "version": 1,
+    # The version number of our log
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {"format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"}
+    },
+    "handlers": {
+        "file": {
+            "level": "NOTSET",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "records.log",
+            "formatter": "default",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "NOTSET",
+            "formatter": "default",
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["file", "console"],
+            "level": "NOTSET",
+            "propagate": True,
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
