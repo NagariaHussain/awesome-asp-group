@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('recruiting', '0001_initial'),
+        ("recruiting", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jobposting',
-            name='is_published',
+            model_name="jobposting",
+            name="is_published",
             field=models.BooleanField(default=False),
         ),
     ]
