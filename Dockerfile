@@ -7,7 +7,7 @@ RUN apt update && curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 RUN apt -y install nodejs
 
-RUN npm install -g yarn
+RUN npm --unsafe-perm install -g yarn
 RUN yarn install
 
 # Install python dependencies
