@@ -7,9 +7,10 @@
 				v-for="item in navigation"
 				:key="item.name"
 				:to="item.href"
-				v-slot="{ href, isExactActive }"
+				v-slot="{ href, isExactActive, navigate }"
 			>
 				<a
+					@click="navigate"
 					:href="href"
 					:class="[
 						isExactActive

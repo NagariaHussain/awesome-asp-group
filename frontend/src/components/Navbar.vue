@@ -21,10 +21,11 @@
 							v-for="navItem in navItems"
 							:to="navItem.href"
 							:key="navItem.href"
-							v-slot="{ href, isActive }"
+							v-slot="{ href, isActive, navigate }"
 							custom
 						>
 							<a
+								@click="navigate"
 								:href="href"
 								class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
 								:class="
