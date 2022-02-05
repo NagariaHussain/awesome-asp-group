@@ -3,7 +3,9 @@
 		<Navbar />
 		<!-- route outlet -->
 		<!-- component matched by the route will render here -->
-		<router-view></router-view>
+		<div class="mx-3 mt-3">
+			<router-view></router-view>
+		</div>
 	</div>
 </template>
 
