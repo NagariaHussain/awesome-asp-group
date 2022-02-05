@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-=zgsjwon-u^8)y^es(r%)33*u=9h6m&ftaf99-69o=xqbm9ebu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["misty-tree-6338.fly.dev", "awesome-asp.onrender.com"]
 
 
 # Application definition
