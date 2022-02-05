@@ -7,16 +7,13 @@ RUN apt update && curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 RUN apt -y install nodejs
 
-RUN npm --unsafe-perm install -g yarn
-RUN yarn install
-
 # Install python dependencies
 COPY requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy frontend directory & install dependencies
 COPY frontend/package.json /frontend/package.json
-RUN yarn install
+RUN cd frontend/ && npm install
 
 COPY backend/ /backend
 COPY frontend/ /frontend
@@ -24,7 +21,7 @@ COPY frontend/ /frontend
 # Build frontend assets
 WORKDIR /frontend
 RUN npm rebuild esbuild
-RUN yarn build
+RUN npm run build
 
 WORKDIR /backend
 
