@@ -1,25 +1,14 @@
 <template>
-	<div class="p-5">
-		<h2>Job Listings:</h2>
-
-		<ul v-if="jobListings" class="space-y-2 divide-y-2">
-			<li v-for="jl in jobListings" :key="jl.id">
-				<div>
-					{{ jl.job_title }} - {{ jl.location }} -
-					{{ jl.is_published }}
-				</div>
-				<button
-					@click="publishJob(jl.id)"
-					class="p-2 bg-indigo-400 text-white"
-				>
-					Publish
-				</button>
-			</li>
-		</ul>
+	<div>
+		<Navbar />
+		<!-- route outlet -->
+		<!-- component matched by the route will render here -->
+		<router-view></router-view>
 	</div>
 </template>
 
 <script>
+import Navbar from './components/Navbar.vue';
 export default {
 	data() {
 		return {
@@ -28,17 +17,17 @@ export default {
 	},
 	mounted() {
 		this.$api
-			.get("/")
+			.get('/')
 			.then((d) => {
 				console.log(d);
 				this.jobListings = d.data;
 			})
 			.catch((e) => console.log(e));
 	},
-	inject: ["$api"],
+	inject: ['$api'],
 	methods: {
 		publishJob(id) {
-			console.log("Publish job clicked.");
+			console.log('Publish job clicked.');
 			this.$api
 				.get(`/publish-jp/${id}`)
 				.then((d) => {
@@ -48,7 +37,7 @@ export default {
 		},
 		fetchData() {
 			this.$api
-				.get("/")
+				.get('/')
 				.then((d) => {
 					console.log(d);
 					this.jobListings = d.data;
@@ -56,5 +45,6 @@ export default {
 				.catch((e) => console.log(e));
 		},
 	},
+	components: { Navbar },
 };
 </script>

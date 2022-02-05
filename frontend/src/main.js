@@ -1,14 +1,22 @@
-import "./main.css";
-import { createApp } from "vue";
+import './main.css';
 
+import { createApp } from 'vue';
 import App from './App.vue';
+import axios from 'axios';
 
-import axios from "axios";
+// Setup Vue Router
+import { createRouter, createWebHistory } from 'vue-router';
+import routes from './routes';
 
+const router = createRouter({
+	history: createWebHistory(),
+	routes,
+});
 const api = axios.create({
-	baseURL: "/api/",
+	baseURL: '/api/',
 });
 const app = createApp(App);
 
-app.provide("$api", api);
-app.mount("#app");
+app.use(router);
+app.provide('$api', api);
+app.mount('#app');
