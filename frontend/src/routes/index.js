@@ -17,8 +17,9 @@ export default [
 			{ path: '/applicants', component: Applicants },
 			{ path: '/company', component: Company },
 		],
+		meta: { requiresAuth: true },
 	},
-	{ path: '/jobs', component: Jobs, meta: { requiresAuth: true } },
-	{ path: '/login', component: Login },
+	{ path: '/jobs', component: Jobs },
+	{ path: '/login', component: Login, meta: { isLoginPage: true } },
 	{ path: '/about', component: About },
 ];

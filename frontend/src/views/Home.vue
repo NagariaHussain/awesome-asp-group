@@ -53,15 +53,16 @@
 	</div>
 </template>
 
-<script>
+<script setup>
 import {
 	FolderIcon,
 	HomeIcon,
 	InboxIcon,
 	UsersIcon,
 } from '@heroicons/vue/outline';
+import { reactive, onActivated } from 'vue';
 
-const navigation = [
+const navigation = reactive([
 	{
 		name: 'Dashboard',
 		href: '/',
@@ -80,17 +81,9 @@ const navigation = [
 		count: '19',
 	},
 	{ name: 'Company', href: '/company', icon: InboxIcon, current: false },
-];
+]);
 
-export default {
-	data() {
-		return {
-			navigation,
-		};
-	},
-	activated() {
-		console.log('Home activated');
-		this.$router.replace({ path: '/dashboard' });
-	},
-};
+onActivated(() => {
+	this.$router.replace({ path: '/dashboard' });
+});
 </script>

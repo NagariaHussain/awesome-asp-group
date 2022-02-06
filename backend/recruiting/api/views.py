@@ -41,11 +41,9 @@ def logout_user(request):
 
 @api_view(["POST"])
 def login_user(request):
-    received_json_data = json.loads(request.body)
+    received_json_data = request.data
     username = received_json_data["username"]
     password = received_json_data["password"]
-
-    print(received_json_data)
 
     user = authenticate(request, username=username, password=password)
 

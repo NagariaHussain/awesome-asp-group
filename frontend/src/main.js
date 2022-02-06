@@ -3,11 +3,12 @@ import './main.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 import axios from 'axios';
-import { createPinia, defineStore } from 'pinia';
+import { createPinia } from 'pinia';
 
 // Setup Vue Router
 import { createRouter, createWebHistory } from 'vue-router';
 import routes from './routes';
+import useUser from './stores/useUser';
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -23,23 +24,25 @@ app.use(createPinia()); // Store
 app.provide('$api', api);
 app.mount('#app');
 
-export const useAccountInfo = defineStore('account', {
-	state: () => {
-		return {
-			isLoggedIn: false,
-			user: {
-				username: null,
-				email: null,
-			},
-		};
-	},
-});
+router.beforeEach(async (to, from, next) => {
+	const accountStore = useUser();
 
-router.beforeEach((to, from, next) => {
-	const accountStore = useAccountInfo();
+	// Trying to visit login page
+	if (to.meta.isLoginPage) {
+		console.log('Visit login page');
+		await accountStore.fetchAccount();
 
-	if (to.meta.requiresAuth && !accountStore.isLoggedIn) {
-		next('/login');
+		if (accountStore.isLoggedIn) {
+			next('/');
+		} else {
+			next();
+		}
+	} else if (to.meta.requiresAuth) {
+		if (!accountStore.isLoggedIn) {
+			next('/login');
+		} else {
+			next();
+		}
 	} else {
 		next();
 	}

@@ -11,42 +11,21 @@
 
 <script>
 import Navbar from './components/Navbar.vue';
+import useUser from './stores/useUser';
+import { mapStores } from 'pinia';
+
 export default {
 	data() {
-		return {
-			jobListings: null,
-		};
+		return {};
 	},
 	mounted() {
-		this.$api
-			.get('/')
-			.then((d) => {
-				console.log(d);
-				this.jobListings = d.data;
-			})
-			.catch((e) => console.log(e));
+		this.userStore.fetchAccount();
+	},
+	computed: {
+		...mapStores(useUser),
 	},
 	inject: ['$api'],
-	methods: {
-		publishJob(id) {
-			console.log('Publish job clicked.');
-			this.$api
-				.get(`/publish-jp/${id}`)
-				.then((d) => {
-					this.fetchData();
-				})
-				.catch((e) => console.log(e));
-		},
-		fetchData() {
-			this.$api
-				.get('/')
-				.then((d) => {
-					console.log(d);
-					this.jobListings = d.data;
-				})
-				.catch((e) => console.log(e));
-		},
-	},
+	methods: {},
 	components: { Navbar },
 };
 </script>
