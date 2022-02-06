@@ -20,8 +20,8 @@ export default defineStore('user', {
 			await api.post('/login', { username, password });
 			return this.fetchAccount();
 		},
-		async logout() {
-			await api.get('/logout');
+		logout() {
+			return api.get('/logout');
 		},
 		async fetchAccount() {
 			console.log('fetchAccount');

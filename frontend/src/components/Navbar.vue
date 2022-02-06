@@ -227,6 +227,7 @@ export default {
 	methods: {
 		async logout() {
 			await this.userStore.logout();
+			window.location.reload();
 		},
 		login() {
 			this.$router.push('/login');
