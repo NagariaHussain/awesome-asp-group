@@ -65,7 +65,10 @@
 							<MenuItems
 								class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
 							>
-								<MenuItem v-slot="{ active }">
+								<MenuItem
+									v-if="userStore.isLoggedIn"
+									v-slot="{ active }"
+								>
 									<a
 										@click="logout"
 										:class="[
@@ -73,6 +76,16 @@
 											'block px-4 py-2 text-sm text-gray-700',
 										]"
 										>Sign out</a
+									>
+								</MenuItem>
+								<MenuItem v-else v-slot="{ active }">
+									<a
+										@click="login"
+										:class="[
+											active ? 'bg-gray-100' : '',
+											'block px-4 py-2 text-sm text-gray-700',
+										]"
+										>Sign In</a
 									>
 								</MenuItem>
 							</MenuItems>
@@ -154,6 +167,7 @@
 						>Settings</DisclosureButton
 					>
 					<DisclosureButton
+						@click.prevent="logout"
 						as="a"
 						href="#"
 						class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
@@ -176,6 +190,8 @@ import {
 	MenuItems,
 } from '@headlessui/vue';
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
+import useUser from '../stores/useUser';
+import { mapStores } from 'pinia';
 
 export default {
 	components: {
@@ -209,11 +225,15 @@ export default {
 		};
 	},
 	methods: {
-		logout() {
-			this.$api.get('/logout').then(() => {
-				window.location.reload();
-			});
+		async logout() {
+			await this.userStore.logout();
 		},
+		login() {
+			this.$router.push('/login');
+		},
+	},
+	computed: {
+		...mapStores(useUser),
 	},
 	inject: ['$api'],
 };

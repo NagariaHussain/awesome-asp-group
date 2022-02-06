@@ -8,7 +8,7 @@
 
 		<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
 			<div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-				<form class="space-y-6" @submit.prevent="signIn">
+				<form class="space-y-6" @submit.prevent="login">
 					<div>
 						<label
 							for="username"
@@ -152,40 +152,19 @@ export default {
 		return {
 			username: '',
 			password: '',
+			loading: false,
 		};
 	},
 	computed: {
 		...mapStores(useUser),
 	},
 	methods: {
-		async signIn() {
-			this.cookie = Object.fromEntries(
-				document.cookie
-					.split('; ')
-					.map((part) => part.split('='))
-					.map((d) => [d[0], decodeURIComponent(d[1])])
-			);
+		async login() {
+			this.loading = true;
+			await this.userStore.login(this.username, this.password);
+			this.loading = false;
 
-			const csrfToken = this.cookie.csrftoken;
-
-			// return;
-			this.$api
-				.post(
-					'/login',
-					{
-						username: this.username,
-						password: this.password,
-					},
-					{
-						headers: {
-							'X-CSRFToken': csrfToken,
-						},
-					}
-				)
-				.then(() => {
-					this.userStore.fetchAccount();
-					this.$router.push('/jobs');
-				});
+			this.$router.push('/');
 		},
 	},
 	inject: ['$api'],
