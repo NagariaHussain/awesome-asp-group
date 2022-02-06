@@ -1,5 +1,5 @@
 <template>
-	<div class="prose prose-indigo">
+	<div class="prose prose-indigo mt-4">
 		<h1>About Us</h1>
 
 		<p>
