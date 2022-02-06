@@ -5,7 +5,7 @@ import HomeDashboard from '../views/HomeDashboard.vue';
 import Postings from '../views/Postings.vue';
 import Applicants from '../views/Applicants.vue';
 import Company from '../views/Company.vue';
-import Login from '../views/Login.vue';
+import authRoutes from './auth';
 
 export default [
 	{
@@ -20,6 +20,6 @@ export default [
 		meta: { requiresAuth: true },
 	},
 	{ path: '/jobs', component: Jobs },
-	{ path: '/login', component: Login, meta: { isLoginPage: true } },
 	{ path: '/about', component: About },
+	...authRoutes,
 ];
