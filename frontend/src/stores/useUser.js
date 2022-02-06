@@ -1,12 +1,5 @@
 import { defineStore } from 'pinia';
-import axios from 'axios';
-
-const api = axios.create({
-	baseURL: '/api/',
-	headers: {
-		'X-CSRFToken': getCSRFToken(),
-	},
-});
+import api from '../libs/api';
 
 export default defineStore('user', {
 	state: () => {
@@ -24,7 +17,6 @@ export default defineStore('user', {
 			return api.get('/logout');
 		},
 		async fetchAccount() {
-			console.log('fetchAccount');
 			try {
 				let accountData = await api.get('/account');
 				if (accountData) {
@@ -37,14 +29,3 @@ export default defineStore('user', {
 		},
 	},
 });
-
-function getCSRFToken() {
-	const cookie = Object.fromEntries(
-		document.cookie
-			.split('; ')
-			.map((part) => part.split('='))
-			.map((d) => [d[0], decodeURIComponent(d[1])])
-	);
-
-	return cookie.csrftoken;
-}
