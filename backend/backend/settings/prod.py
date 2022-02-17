@@ -1,6 +1,6 @@
 from .defaults import *
 
-DEBUG = False
+DEBUG = True
 
 DATABASES = {
     "default": {
