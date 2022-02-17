@@ -37,6 +37,10 @@ export default defineStore('user', {
 					this.account.email = data.email;
 					this.account.first_name = data.first_name;
 					this.account.last_name = data.last_name;
+					this.account.userType =
+						data.profile.user_type === 'I'
+							? 'Individual'
+							: 'Company';
 				}
 			} catch (e) {
 				console.error(e);

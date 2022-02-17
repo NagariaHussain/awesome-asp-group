@@ -111,8 +111,8 @@
 							<RadioGroupOption
 								as="template"
 								v-for="option in userOptions"
-								:key="option"
-								:value="option"
+								:key="option.value"
+								:value="option.value"
 								v-slot="{ active, checked }"
 							>
 								<div
@@ -128,7 +128,7 @@
 									]"
 								>
 									<RadioGroupLabel as="p">
-										{{ option }}
+										{{ option.label }}
 									</RadioGroupLabel>
 								</div>
 							</RadioGroupOption>
@@ -202,8 +202,11 @@ export default {
 			passwordRepeat: '',
 			loading: false,
 			errorMessage: null,
-			userOptions: ['Company', 'Individual'],
-			userType: 'Company',
+			userOptions: [
+				{ label: 'Company', value: 'C' },
+				{ label: 'Individual', value: 'I' },
+			],
+			userType: 'C',
 		};
 	},
 
@@ -242,7 +245,7 @@ export default {
 					password,
 					firstName,
 					lastName,
-					userType,
+					profile: { user_type: userType },
 				});
 
 				this.$router.push('/login');

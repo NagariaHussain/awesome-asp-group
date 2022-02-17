@@ -2,7 +2,7 @@ import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from recruiting.models import JobPosting
+from recruiting.models import JobPosting, Profile
 from .serializers import JobPostingSerializer, UserSerializer
 from django.contrib.auth import authenticate, login, get_user, logout
 from django.contrib.auth.models import User
@@ -37,6 +37,10 @@ def signup_user(request):
             last_name=data["lastName"],
         )
         new_user.save()
+
+        # Create profile with user_type set to data["userType"]
+        Profile.objects.create(user=new_user, user_type=data["profile"]["user_type"])
+
         login(request, new_user)
         return Response(user.data)
     else:
