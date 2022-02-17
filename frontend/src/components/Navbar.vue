@@ -65,7 +65,10 @@
 							<MenuItems
 								class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
 							>
-								<div class="px-4 py-3">
+								<div
+									class="px-4 py-3"
+									v-if="userStore.isLoggedIn"
+								>
 									<p class="text-sm">Signed in as</p>
 									<p
 										class="truncate text-sm font-medium text-gray-900"
@@ -153,12 +156,10 @@
 							alt=""
 						/>
 					</div>
-					<div class="ml-3">
+					<div class="ml-3" v-if="userStore.isLoggedIn">
 						<div class="text-base font-medium text-gray-800">
-							Tom Cook
-						</div>
-						<div class="text-sm font-medium text-gray-500">
-							tom@example.com
+							{{ userStore.account.first_name }}
+							{{ userStore.account.last_name }}
 						</div>
 					</div>
 				</div>
