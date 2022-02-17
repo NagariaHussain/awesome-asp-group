@@ -2,8 +2,8 @@ import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from recruiting.models import JobPosting
-from .serializers import JobPostingSerializer, UserSerializer
+from recruiting.models import JobPosting, JobApplication
+from .serializers import JobPostingSerializer, UserSerializer, ApplicationSerializer
 from django.contrib.auth import authenticate, login, get_user, logout
 
 
@@ -66,3 +66,19 @@ def get_account_info(request):
     else:
         serializer = UserSerializer(get_user(request))
         return Response(serializer.data)
+
+@api_view(["GET"])
+def get_list_of_all_applications(request):
+    applications = JobApplication.objects.all()
+    serializer = ApplicationSerializer(applications, many=True)
+    return Response(serializer.data)
+
+@api_view(["POST"])
+def create_application(request):
+    data = json.loads(request.body)
+    application = ApplicationSerializer(data=data)
+    if application.is_valid():
+        application.save()
+        return Response(application.data)
+    else:
+        return Response(application.errors)
