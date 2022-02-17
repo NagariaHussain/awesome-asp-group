@@ -65,6 +65,15 @@
 							<MenuItems
 								class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
 							>
+								<div class="px-4 py-3">
+									<p class="text-sm">Signed in as</p>
+									<p
+										class="truncate text-sm font-medium text-gray-900"
+									>
+										{{ userStore.account.first_name }}
+										{{ userStore.account.last_name }}
+									</p>
+								</div>
 								<MenuItem
 									v-if="userStore.isLoggedIn"
 									v-slot="{ active }"

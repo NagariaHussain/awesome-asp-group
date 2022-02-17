@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from recruiting.models import JobPosting
 from .serializers import JobPostingSerializer, UserSerializer
 from django.contrib.auth import authenticate, login, get_user, logout
+from django.contrib.auth.models import User
 
 
 @api_view(["GET"])
@@ -25,12 +26,22 @@ def publish_job_posting(request, id):
 @api_view(["POST"])
 def signup_user(request):
     data = json.loads(request.body)
+    print(data)
     user = UserSerializer(data=data)
+
     if user.is_valid():
-        user.save()
+        new_user = User.objects.create_user(
+            username=data["username"],
+            password=data["password"],
+            first_name=data["firstName"],
+            last_name=data["lastName"],
+        )
+        new_user.save()
+        login(request, new_user)
         return Response(user.data)
     else:
-        return Response(user.errors)
+        print(Response(user.errors))
+        return Response(user.errors, status=400, exception=True)
 
 
 @api_view(["GET"])
@@ -65,4 +76,5 @@ def get_account_info(request):
         return Response("User not authenticated", status=403, exception=True)
     else:
         serializer = UserSerializer(get_user(request))
+        print(serializer.data)
         return Response(serializer.data)
