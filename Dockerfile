@@ -25,6 +25,11 @@ RUN npm run build
 
 WORKDIR /backend
 
+RUN [ \
+    "python", "manage.py", "migrate",  \
+    "--settings", "backend.settings.prod"\
+    ]
+
 CMD [ \
     "python", "manage.py", "runserver", "0.0.0.0:8080", \
     "--settings", "backend.settings.prod"\
