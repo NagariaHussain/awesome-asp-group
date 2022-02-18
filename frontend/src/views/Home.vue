@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
 	<div class="grid grid-cols-4 gap-2">
 		<nav class="space-y-1" aria-label="Sidebar">
@@ -47,7 +46,7 @@
 				</a>
 			</router-link>
 		</nav>
-		<div class="col-span-3 p-4">
+		<div class="col-span-3 px-4">
 			<router-view></router-view>
 		</div>
 	</div>

@@ -6,7 +6,17 @@ from django.contrib.auth import models as auth_models
 class JobPostingSerializer(ModelSerializer):
     class Meta:
         model = JobPosting
-        fields = "__all__"
+        fields = [
+            "id",
+            "job_title",
+            "description",
+            "is_published",
+            "location",
+            "created_at",
+        ]
+
+    def create(self, validated_data):
+        return JobPosting.objects.create(**validated_data)
 
 
 class ProfileSerializer(ModelSerializer):

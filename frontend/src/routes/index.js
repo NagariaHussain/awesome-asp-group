@@ -5,6 +5,8 @@ import HomeDashboard from '../views/HomeDashboard.vue';
 import Postings from '../views/Postings.vue';
 import Applicants from '../views/Applicants.vue';
 import Company from '../views/Company.vue';
+import NewJobPosting from '../views/NewJobPosting.vue';
+
 import authRoutes from './auth';
 
 export default [
@@ -14,6 +16,7 @@ export default [
 		children: [
 			{ path: '/', component: HomeDashboard },
 			{ path: '/postings', component: Postings },
+			{ path: '/postings/new', component: NewJobPosting },
 			{ path: '/applicants', component: Applicants },
 			{ path: '/company', component: Company },
 		],

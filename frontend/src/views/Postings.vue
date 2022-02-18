@@ -1,5 +1,22 @@
 <template>
 	<div>
+		<div
+			class="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between"
+		>
+			<h3 class="text-lg font-medium leading-6 text-gray-900">
+				Job Postings
+			</h3>
+			<div class="mt-3 space-x-2 sm:mt-0 sm:ml-4">
+				<Button
+					@click="$router.push('/postings/new')"
+					role="button"
+					class="inline-flex items-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+				>
+					<PlusIcon class="-ml-1 mr-1 h-5 w-5" aria-hidden="true" />
+					New Job Posting</Button
+				>
+			</div>
+		</div>
 		<p v-if="loading">Loading...</p>
 
 		<div
@@ -27,6 +44,7 @@
 			</p>
 			<div class="mt-6">
 				<button
+					@click="$router.push('/postings/new')"
 					type="button"
 					class="inline-flex items-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
 				>
@@ -45,9 +63,11 @@
 
 <script>
 import { PlusIcon } from '@heroicons/vue/solid';
+import Button from '../components/Button.vue';
 export default {
 	components: {
 		PlusIcon,
+		Button,
 	},
 	data() {
 		return {

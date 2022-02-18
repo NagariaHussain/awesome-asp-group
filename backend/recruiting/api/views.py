@@ -17,6 +17,18 @@ def get_all_job_postings(request):
     return Response(serializer.data)
 
 
+@api_view(["POST"])
+@login_required
+def create_job_posting(request):
+    # postings = request.user.job_postings.add
+    serializer = JobPostingSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(company=request.user)
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors, exception=True, status=400)
+
+
 @api_view(["GET"])
 def publish_job_posting(request, id):
     job_posting = JobPosting.objects.get(id=id)
@@ -28,7 +40,6 @@ def publish_job_posting(request, id):
 @api_view(["POST"])
 def signup_user(request):
     data = json.loads(request.body)
-    print(data)
     user = UserSerializer(data=data)
 
     if user.is_valid():
@@ -46,7 +57,6 @@ def signup_user(request):
         login(request, new_user)
         return Response(user.data)
     else:
-        print(Response(user.errors))
         return Response(user.errors, status=400, exception=True)
 
 
@@ -82,5 +92,4 @@ def get_account_info(request):
         return Response("User not authenticated", status=403, exception=True)
     else:
         serializer = UserSerializer(get_user(request))
-        print(serializer.data)
         return Response(serializer.data)

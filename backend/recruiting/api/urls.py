@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.get_all_job_postings),
     path("job-postings", views.get_all_job_postings),
+    path("job-postings/new", views.create_job_posting),
     path("publish-jp/<int:id>", views.publish_job_posting),
     path("login", views.login_user),
     path("signup", views.signup_user),
