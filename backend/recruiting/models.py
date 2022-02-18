@@ -18,12 +18,14 @@ class Profile(models.Model):
         return f"{self.user_type}:{self.user.username}"
 
 
-# Create your models here.
 class JobPosting(models.Model):
-    job_title = models.CharField(max_length=255)
-    description = models.TextField()
+    job_title = models.CharField(max_length=255, null=False)
+    description = models.TextField(default="")
     is_published = models.BooleanField(default=False)
-    location = models.CharField(max_length=255)
+    location = models.CharField(max_length=255, null=False)
+    company = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="job_postings"
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
