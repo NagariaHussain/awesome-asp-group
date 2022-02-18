@@ -25,7 +25,6 @@ export default {
 		...mapStores(useUser),
 	},
 	inject: ['$api'],
-	methods: {},
 	components: { Navbar },
 };
 </script>

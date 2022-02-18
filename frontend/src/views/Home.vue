@@ -82,8 +82,4 @@ const navigation = reactive([
 	},
 	{ name: 'Company', href: '/company', icon: InboxIcon, current: false },
 ]);
-
-onActivated(() => {
-	this.$router.replace({ path: '/dashboard' });
-});
 </script>
