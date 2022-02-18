@@ -6,7 +6,12 @@
 			<h3 class="text-lg font-medium leading-6 text-gray-900">
 				Job Postings
 			</h3>
-			<div class="mt-3 space-x-2 sm:mt-0 sm:ml-4">
+
+			<div v-if="loading" class="mt-3 space-x-2 sm:mt-0 sm:ml-4">
+				<Button :loading="true">Loading</Button>
+			</div>
+
+			<div v-else class="mt-3 space-x-2 sm:mt-0 sm:ml-4">
 				<Button @click="$router.push('/postings')"> Cancel </Button>
 
 				<input

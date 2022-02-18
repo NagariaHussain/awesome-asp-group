@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<div
+			v-if="!loading && postings && postings.length > 0"
 			class="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between"
 		>
 			<h3 class="text-lg font-medium leading-6 text-gray-900">
