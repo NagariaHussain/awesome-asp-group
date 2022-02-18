@@ -68,6 +68,32 @@
 					/>
 				</div>
 			</div>
+
+			<div
+				class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5"
+			>
+				<label
+					for="department"
+					class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+				>
+					Department
+				</label>
+				<div class="mt-1 sm:col-span-2 sm:mt-0">
+					<select
+						v-model="jobPosting.department"
+						id="department"
+						name="department"
+						autocomplete="false"
+						class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm"
+					>
+						<option selected>Engineering</option>
+						<option>Marketing</option>
+						<option>Design</option>
+						<option>Leadership</option>
+					</select>
+				</div>
+			</div>
+
 			<div>
 				<label
 					for="description"
@@ -99,6 +125,7 @@ export default {
 				job_title: '',
 				location: '',
 				description: '',
+				department: 'Design',
 			},
 			loading: false,
 		};
@@ -119,18 +146,22 @@ export default {
 			return cookie.csrftoken;
 		},
 		async saveJobPosting() {
+			console.log('saveJobPosting');
 			this.loading = true;
+
 			let responseData = null;
 			try {
 				responseData = await this.$api.post(
 					'/job-postings/new',
-					(data = this.jobPosting),
-					(headers = {
-						'X-CSRFToken': this.getCSRFToken(),
-					})
+					this.jobPosting,
+					{
+						headers: {
+							'X-CSRFToken': this.getCSRFToken(),
+						},
+					}
 				);
 			} catch (e) {
-				console.log(e.response);
+				console.log(e);
 				console.error('Something went wrong while saving.');
 			}
 

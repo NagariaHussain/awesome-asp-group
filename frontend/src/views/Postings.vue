@@ -19,7 +19,10 @@
 				>
 			</div>
 		</div>
-		<p v-if="loading">Loading...</p>
+
+		<div class="my-7 mr-auto" v-if="loading">
+			<Button :loading="true">Loading...</Button>
+		</div>
 
 		<div
 			v-if="!loading && postings && postings.length === 0"
@@ -56,20 +59,23 @@
 			</div>
 		</div>
 
-		<pre v-for="posting in postings" :key="posting.id">
-			{{ posting }}
-		</pre
-		>
+		<JobPostingsList
+			v-if="!loading && postings"
+			class="mt-5"
+			:postings="postings"
+		/>
 	</div>
 </template>
 
 <script>
 import { PlusIcon } from '@heroicons/vue/solid';
 import Button from '../components/Button.vue';
+import JobPostingsList from '../components/JobPostingsList.vue';
 export default {
 	components: {
 		PlusIcon,
 		Button,
+		JobPostingsList,
 	},
 	data() {
 		return {

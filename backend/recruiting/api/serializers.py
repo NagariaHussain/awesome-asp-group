@@ -13,6 +13,7 @@ class JobPostingSerializer(ModelSerializer):
             "is_published",
             "location",
             "created_at",
+            "department",
         ]
 
     def create(self, validated_data):
