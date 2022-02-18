@@ -1,16 +1,18 @@
 import json
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
+from django.contrib.auth.models import User
 from recruiting.models import JobPosting, Profile
+from django.contrib.auth.decorators import login_required
 from .serializers import JobPostingSerializer, UserSerializer
 from django.contrib.auth import authenticate, login, get_user, logout
-from django.contrib.auth.models import User
 
 
 @api_view(["GET"])
+@login_required
 def get_all_job_postings(request):
-    postings = JobPosting.objects.all()
+    postings = request.user.job_postings.all()
     serializer = JobPostingSerializer(postings, many=True)
     return Response(serializer.data)
 
