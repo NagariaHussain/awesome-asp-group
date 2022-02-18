@@ -108,13 +108,26 @@ export default {
 		Button,
 	},
 	methods: {
+		getCSRFToken() {
+			const cookie = Object.fromEntries(
+				document.cookie
+					.split('; ')
+					.map((part) => part.split('='))
+					.map((d) => [d[0], decodeURIComponent(d[1])])
+			);
+
+			return cookie.csrftoken;
+		},
 		async saveJobPosting() {
 			this.loading = true;
 			let responseData = null;
 			try {
 				responseData = await this.$api.post(
 					'/job-postings/new',
-					this.jobPosting
+					(data = this.jobPosting),
+					(headers = {
+						'X-CSRFToken': this.getCSRFToken(),
+					})
 				);
 			} catch (e) {
 				console.log(e.response);
