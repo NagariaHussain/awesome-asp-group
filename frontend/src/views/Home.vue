@@ -47,7 +47,7 @@
 				</a>
 			</router-link>
 		</nav>
-		<div class="col-span-3 bg-slate-200 p-4">
+		<div class="col-span-3 p-4">
 			<router-view></router-view>
 		</div>
 	</div>

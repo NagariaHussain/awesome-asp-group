@@ -30,7 +30,7 @@
 								class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
 								:class="
 									isActive
-										? 'border-indigo-500 text-gray-900'
+										? 'border-sky-500 text-gray-900'
 										: 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
 								"
 							>
@@ -44,7 +44,7 @@
 					<Menu as="div" class="relative ml-3">
 						<div>
 							<MenuButton
-								class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+								class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
 							>
 								<span class="sr-only">Open user menu</span>
 								<img
@@ -107,7 +107,7 @@
 				<div class="-mr-2 flex items-center sm:hidden">
 					<!-- Mobile menu button -->
 					<DisclosureButton
-						class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+						class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500"
 					>
 						<span class="sr-only">Open main menu</span>
 						<MenuIcon
@@ -127,11 +127,11 @@
 
 		<DisclosurePanel class="sm:hidden">
 			<div class="space-y-1 pt-2 pb-3">
-				<!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
+				<!-- Current: "bg-sky-50 border-sky-500 text-sky-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
 				<DisclosureButton
 					as="a"
 					href="#"
-					class="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700"
+					class="block border-l-4 border-sky-500 bg-sky-50 py-2 pl-3 pr-4 text-base font-medium text-sky-700"
 					>Home</DisclosureButton
 				>
 				<DisclosureButton
