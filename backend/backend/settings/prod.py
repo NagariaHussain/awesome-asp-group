@@ -12,3 +12,6 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT"),
     },
 }
+
+
+CSRF_TRUSTED_ORIGINS = ["localhost", "https://awesome-asp.onrender.com"]
