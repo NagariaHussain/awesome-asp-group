@@ -9,6 +9,7 @@
 			</h3>
 			<div class="mt-3 space-x-2 sm:mt-0 sm:ml-4">
 				<Button
+					type="primary"
 					@click="$router.push('/postings/new')"
 					role="button"
 					class="inline-flex items-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"

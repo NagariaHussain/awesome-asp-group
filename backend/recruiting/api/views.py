@@ -1,6 +1,7 @@
 import json
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 
 from django.contrib.auth.models import User
 from recruiting.models import JobPosting, Profile
@@ -18,7 +19,7 @@ def get_all_job_postings(request):
 
 
 @api_view(["POST"])
-@login_required
+@permission_classes([IsAuthenticated])
 def create_job_posting(request):
     # postings = request.user.job_postings.add
     serializer = JobPostingSerializer(data=request.data)
