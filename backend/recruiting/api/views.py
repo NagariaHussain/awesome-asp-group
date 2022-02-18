@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate, login, get_user, logout
 @api_view(["GET"])
 @login_required
 def get_all_job_postings(request):
-    postings = request.user.job_postings.all()
+    postings = request.user.job_postings.all().order_by("-created_at")
     serializer = JobPostingSerializer(postings, many=True)
     return Response(serializer.data)
 
