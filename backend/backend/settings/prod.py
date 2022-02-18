@@ -14,4 +14,4 @@ DATABASES = {
 }
 
 
-CSRF_TRUSTED_ORIGINS = ["localhost", "https://awesome-asp.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost", "https://awesome-asp.onrender.com"]
