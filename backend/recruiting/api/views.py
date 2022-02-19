@@ -38,6 +38,13 @@ def publish_job_posting(request, id):
     return Response(True)
 
 
+@api_view(["GET"])
+def get_job_posting_details(request, id):
+    job_posting = JobPosting.objects.get(id=id)
+    serializer = JobPostingSerializer(job_posting)
+    return Response(serializer.data)
+
+
 @api_view(["POST"])
 def signup_user(request):
     data = json.loads(request.body)

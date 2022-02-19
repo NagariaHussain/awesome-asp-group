@@ -6,6 +6,7 @@ import Postings from '../views/Postings.vue';
 import Applicants from '../views/Applicants.vue';
 import Company from '../views/Company.vue';
 import NewJobPosting from '../views/NewJobPosting.vue';
+import JobPostingDetail from '../views/JobPostingDetail.vue';
 
 import authRoutes from './auth';
 
@@ -17,6 +18,7 @@ export default [
 			{ path: '/', component: HomeDashboard },
 			{ path: '/postings', component: Postings },
 			{ path: '/postings/new', component: NewJobPosting },
+			{ path: '/postings/:id', component: JobPostingDetail, props: true },
 			{ path: '/applicants', component: Applicants },
 			{ path: '/company', component: Company },
 		],
