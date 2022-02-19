@@ -39,6 +39,14 @@ def publish_job_posting(request, id):
 
 
 @api_view(["GET"])
+def unlist_job_posting(request, id):
+    job_posting = JobPosting.objects.get(id=id)
+    job_posting.is_published = False
+    job_posting.save()
+    return Response(True)
+
+
+@api_view(["GET"])
 def get_job_posting_details(request, id):
     job_posting = JobPosting.objects.get(id=id)
     serializer = JobPostingSerializer(job_posting)
