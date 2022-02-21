@@ -9,6 +9,7 @@ import NewJobPosting from '../views/NewJobPosting.vue';
 import JobPostingDetail from '../views/JobPostingDetail.vue';
 
 import authRoutes from './auth';
+import UserProfile from "../views/UserProfile.vue";
 
 export default [
 	{
@@ -21,6 +22,7 @@ export default [
 			{ path: '/postings/:id', component: JobPostingDetail, props: true },
 			{ path: '/applicants', component: Applicants },
 			{ path: '/company', component: Company },
+			{path: '/profile', component: UserProfile}
 		],
 		meta: { requiresAuth: true },
 	},
