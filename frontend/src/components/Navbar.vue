@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
 	<Disclosure as="nav" class="bg-white shadow" v-slot="{ open }">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -40,6 +39,13 @@
 					</div>
 				</div>
 				<div class="hidden sm:ml-6 sm:flex sm:items-center">
+					<Button>
+						<a
+							href="https://hussain.frappe.cloud/docs"
+							target="_blank"
+							>Docs</a
+						>
+					</Button>
 					<!-- Profile dropdown -->
 					<Menu as="div" class="relative ml-3">
 						<div>
@@ -202,6 +208,7 @@ import {
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
 import useUser from '../stores/useUser';
 import { mapStores } from 'pinia';
+import Button from './Button.vue';
 
 export default {
 	components: {
@@ -215,6 +222,7 @@ export default {
 		BellIcon,
 		MenuIcon,
 		XIcon,
+		Button,
 	},
 	data() {
 		return {
