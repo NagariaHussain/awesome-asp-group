@@ -1,17 +1,34 @@
 import json
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 
-from recruiting.models import JobPosting, JobApplication
+from recruiting.models import JobPosting, JobApplication, Profile
 from .serializers import JobPostingSerializer, UserSerializer, ApplicationSerializer
+
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, get_user, logout
 
 
 @api_view(["GET"])
+@login_required
 def get_all_job_postings(request):
-    postings = JobPosting.objects.all()
+    postings = request.user.job_postings.all().order_by("-created_at")
     serializer = JobPostingSerializer(postings, many=True)
     return Response(serializer.data)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def create_job_posting(request):
+    # postings = request.user.job_postings.add
+    serializer = JobPostingSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(company=request.user)
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors, exception=True, status=400)
 
 
 @api_view(["GET"])
@@ -22,15 +39,42 @@ def publish_job_posting(request, id):
     return Response(True)
 
 
+@api_view(["GET"])
+def unlist_job_posting(request, id):
+    job_posting = JobPosting.objects.get(id=id)
+    job_posting.is_published = False
+    job_posting.save()
+    return Response(True)
+
+
+@api_view(["GET"])
+def get_job_posting_details(request, id):
+    job_posting = JobPosting.objects.get(id=id)
+    serializer = JobPostingSerializer(job_posting)
+    return Response(serializer.data)
+
+
 @api_view(["POST"])
 def signup_user(request):
     data = json.loads(request.body)
     user = UserSerializer(data=data)
+
     if user.is_valid():
-        user.save()
+        new_user = User.objects.create_user(
+            username=data["username"],
+            password=data["password"],
+            first_name=data["firstName"],
+            last_name=data["lastName"],
+        )
+        new_user.save()
+
+        # Create profile with user_type set to data["userType"]
+        Profile.objects.create(user=new_user, user_type=data["profile"]["user_type"])
+
+        login(request, new_user)
         return Response(user.data)
     else:
-        return Response(user.errors)
+        return Response(user.errors, status=400, exception=True)
 
 
 @api_view(["GET"])

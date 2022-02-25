@@ -1,4 +1,3 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
 	<Disclosure as="nav" class="bg-white shadow" v-slot="{ open }">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -30,7 +29,7 @@
 								class="inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
 								:class="
 									isActive
-										? 'border-indigo-500 text-gray-900'
+										? 'border-sky-500 text-gray-900'
 										: 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
 								"
 							>
@@ -40,11 +39,18 @@
 					</div>
 				</div>
 				<div class="hidden sm:ml-6 sm:flex sm:items-center">
+					<Button>
+						<a
+							href="https://hussain.frappe.cloud/docs"
+							target="_blank"
+							>Docs</a
+						>
+					</Button>
 					<!-- Profile dropdown -->
 					<Menu as="div" class="relative ml-3">
 						<div>
 							<MenuButton
-								class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+								class="flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
 							>
 								<span class="sr-only">Open user menu</span>
 								<img
@@ -65,6 +71,18 @@
 							<MenuItems
 								class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
 							>
+								<div
+									class="px-4 py-3"
+									v-if="userStore.isLoggedIn"
+								>
+									<p class="text-sm">Signed in as</p>
+									<p
+										class="truncate text-sm font-medium text-gray-900"
+									>
+										{{ userStore.account.first_name }}
+										{{ userStore.account.last_name }}
+									</p>
+								</div>
 								<MenuItem
 									v-if="userStore.isLoggedIn"
 									v-slot="{ active }"
@@ -95,7 +113,7 @@
 				<div class="-mr-2 flex items-center sm:hidden">
 					<!-- Mobile menu button -->
 					<DisclosureButton
-						class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+						class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sky-500"
 					>
 						<span class="sr-only">Open main menu</span>
 						<MenuIcon
@@ -115,11 +133,11 @@
 
 		<DisclosurePanel class="sm:hidden">
 			<div class="space-y-1 pt-2 pb-3">
-				<!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
+				<!-- Current: "bg-sky-50 border-sky-500 text-sky-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
 				<DisclosureButton
 					as="a"
 					href="#"
-					class="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700"
+					class="block border-l-4 border-sky-500 bg-sky-50 py-2 pl-3 pr-4 text-base font-medium text-sky-700"
 					>Home</DisclosureButton
 				>
 				<DisclosureButton
@@ -144,12 +162,10 @@
 							alt=""
 						/>
 					</div>
-					<div class="ml-3">
+					<div class="ml-3" v-if="userStore.isLoggedIn">
 						<div class="text-base font-medium text-gray-800">
-							Tom Cook
-						</div>
-						<div class="text-sm font-medium text-gray-500">
-							tom@example.com
+							{{ userStore.account.first_name }}
+							{{ userStore.account.last_name }}
 						</div>
 					</div>
 				</div>
@@ -192,6 +208,7 @@ import {
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
 import useUser from '../stores/useUser';
 import { mapStores } from 'pinia';
+import Button from './Button.vue';
 
 export default {
 	components: {
@@ -205,6 +222,7 @@ export default {
 		BellIcon,
 		MenuIcon,
 		XIcon,
+		Button,
 	},
 	data() {
 		return {

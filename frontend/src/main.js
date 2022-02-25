@@ -30,7 +30,7 @@ router.beforeEach(async (to, from, next) => {
 		await accountStore.fetchAccount();
 
 		if (accountStore.isLoggedIn) {
-			next('/');
+			next(to.redirectedFrom || '/');
 		} else {
 			next();
 		}

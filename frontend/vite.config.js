@@ -1,10 +1,10 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import proxyOptions from "./proxyOptions";
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import proxyOptions from './proxyOptions';
 
 export default defineConfig({
 	build: {
-		outDir: "../backend/dist",
+		outDir: '../backend/backend/dist',
 	},
 	plugins: [vue()],
 	server: {
