@@ -84,7 +84,7 @@
 						id="department"
 						name="department"
 						autocomplete="false"
-						class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm"
+						class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:max-w-xs sm:text-sm"
 					>
 						<option selected>Engineering</option>
 						<option>Marketing</option>

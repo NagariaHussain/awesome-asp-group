@@ -12,9 +12,11 @@ class UserProfileTestCase(APITestCase):
     @classmethod
     def profile_fixture(cls):
         return {
-            "full_name": "David Manukian",
+            "username": "DavidManukian",
             "title": "Senior Data Engineer",
             "location": "Gyumri, Armenia",
+            "age": 0,
+            "gender": "Male",
             "desired_location": "Good place",
             "desired_salary": 7000,
             "about": "person",
@@ -55,7 +57,7 @@ class UserProfileTestCase(APITestCase):
             reverse("get_profile", kwargs={"id": self.user_profile.id})
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data["full_name"], self.user_profile.full_name)
+        self.assertEqual(response.data["username"], self.user_profile.full_name)
         self.assertEqual(response.data["title"], self.user_profile.title)
 
     def test_save_profile(self):

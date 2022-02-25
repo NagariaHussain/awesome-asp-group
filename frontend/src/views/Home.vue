@@ -60,6 +60,7 @@ import {
 	HomeIcon,
 	InboxIcon,
 	UsersIcon,
+	UserIcon
 } from '@heroicons/vue/outline';
 import { reactive, onActivated } from 'vue';
 
@@ -69,6 +70,11 @@ const navigation = reactive([
 		href: '/',
 		icon: HomeIcon,
 		count: '5',
+	},
+	{
+		name: 'Profile',
+		href: '/profile',
+		icon: UserIcon,
 	},
 	{
 		name: 'Job Postings',
