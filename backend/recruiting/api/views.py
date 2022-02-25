@@ -112,7 +112,7 @@ def get_account_info(request):
         return Response(serializer.data)
 
 @api_view(["GET"])
-def get_list_of_all_applications(request):
+def get_all_job_applications(request):
     applications = JobApplication.objects.all()
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data)

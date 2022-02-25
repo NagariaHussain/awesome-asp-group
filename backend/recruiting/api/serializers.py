@@ -3,6 +3,7 @@ from recruiting.models import JobPosting, Profile
 from django.contrib.auth import models as auth_models
 from recruiting.models import JobApplication
 
+
 class JobPostingSerializer(ModelSerializer):
     class Meta:
         model = JobPosting
@@ -32,6 +33,7 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = auth_models.User
         fields = ["username", "first_name", "last_name", "email", "profile"]
+
 
 class ApplicationSerializer(ModelSerializer):
     class Meta:
