@@ -10,6 +10,7 @@ import JobPostingDetail from '../views/JobPostingDetail.vue';
 
 import authRoutes from './auth';
 import UserProfile from '../views/UserProfile.vue';
+import jobApplicationRoutes from './job_application';
 
 export default [
 	{
@@ -20,7 +21,7 @@ export default [
 			{ path: '/postings', component: Postings },
 			{ path: '/postings/new', component: NewJobPosting },
 			{ path: '/postings/:id', component: JobPostingDetail, props: true },
-			{ path: '/applicants', component: Applicants },
+			{ path: '/applicants-overview', component: Applicants },
 			{ path: '/company', component: Company },
 		],
 		meta: { requiresAuth: true },
@@ -29,4 +30,5 @@ export default [
 	{ path: '/about', component: About },
 	{ path: '/profile', component: UserProfile },
 	...authRoutes,
+	...jobApplicationRoutes,
 ];

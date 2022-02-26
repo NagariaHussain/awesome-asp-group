@@ -83,7 +83,7 @@ const navigation = reactive([
 	},
 	{
 		name: 'Applicants',
-		href: '/applicants',
+		href: '/applicants-overview',
 		icon: FolderIcon,
 		count: '19',
 	},

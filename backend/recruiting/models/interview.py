@@ -1,10 +1,10 @@
 from django.db import models
 
 
+# DO THE UI FIRST!
+# DON"T WORRY ABOUT THE BACKEND!
+
 class Interview(models.Model):
-    class Meta:
-        app_label = "recruiting"
-        
     class InterviewStatus(models.TextChoices):
         """Options for Interview Status"""
 
@@ -29,3 +29,4 @@ class Communication(models.Model):
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     sender = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+
