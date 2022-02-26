@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# import Models related to interview process
+from .interview import Interview, Communication
 
 class Profile(models.Model):
     """To store additional user info like `user_type`"""
@@ -13,6 +15,7 @@ class Profile(models.Model):
     user_type = models.CharField(
         max_length=1, choices=UserType.choices, default=UserType.COMPANY
     )
+    avatar_image = models.FileField(upload_to='avatars/', blank=True)
 
     def __str__(self):
         return f"{self.user_type}:{self.user.username}"
@@ -56,7 +59,9 @@ class JobApplication(models.Model):
         blank=True,
     )
 
-    status = models.CharField(max_length=255, choices=Status.choices, default=Status.OPEN)
+    status = models.CharField(
+        max_length=255, choices=Status.choices, default=Status.OPEN
+    )
     expected_salary = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
