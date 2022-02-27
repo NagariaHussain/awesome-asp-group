@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.get_all_job_postings),
     path("job-postings", views.get_all_job_postings),
+    path("job-published-postings", views.get_all_published_postings),
     path("job-postings/new", views.create_job_posting),
     path("job-postings/<int:id>", views.get_job_posting_details),
     path("job-postings/<int:id>/publish", views.publish_job_posting),

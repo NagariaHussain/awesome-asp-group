@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # import Models related to interview process
 from .interview import Interview, Communication
 
+
 class Profile(models.Model):
     """To store additional user info like `user_type`"""
 
@@ -36,6 +37,10 @@ class JobPosting(models.Model):
 
     def __str__(self):
         return f"{self.job_title} : {self.location}"
+
+    @property
+    def company_name(self):
+        return self.company.fullname
 
 
 class JobApplication(models.Model):

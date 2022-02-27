@@ -4,8 +4,8 @@ import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .serializers import UserProfileSerializer
-from .models import UserProfile
+from .serializers import UserProfileSerializer, UserAppliedJobSerializer
+from .models import UserProfile, UserAppliedJob
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +16,6 @@ def get_profile(request, username):
     Get user profile by id (segment)
     """
     try:
-        # profile = UserProfile.objects.get(pk=id)
         profile = UserProfile.objects.get(username=username)
     except UserProfile.DoesNotExist:
         return Response(404)
@@ -55,3 +54,26 @@ def save_profile(request):
         profile.save()
 
         return Response(200)
+
+
+@api_view(["POST"])
+def apply_job(request):
+    """
+    Apply for a job
+    """
+    serializer = UserAppliedJobSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(201)
+    return Response(serializer.errors, 400)
+
+
+@api_view(["GET"])
+def applied_job(request, username):
+    """
+    Fetch all applied jobs for the username
+    """
+    applied_jobs = UserAppliedJob.objects.filter(username=username)
+    serializer = UserAppliedJobSerializer(applied_jobs, many=True)
+
+    return Response(serializer.data)
