@@ -7,7 +7,7 @@
 					<SearchIcon class="mr-3 h-4 w-4 text-gray-400" aria-hidden="true" />
 				</div>
 				<input type="text" v-on:keyup.enter="searching" name="search" id="search"
-					   class="w-96 focus:ring-indigo-500 focus:border-indigo-500 block pl-9 sm:text-sm border-gray-300 rounded-md"
+					   class="w-96 focus:ring-sky-500 focus:border-sky-500 block pl-9 sm:text-sm border-gray-300 rounded-md"
 					   placeholder="Search" />
 			</div>
 		</div>

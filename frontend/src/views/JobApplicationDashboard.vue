@@ -151,7 +151,7 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-1 pt-7 md:grid-cols-3">
+		<div class="grid grid-cols-1 pt-8 md:grid-cols-3 xl:grid-cols-4">
 			<!-- Vertical nav: should be inside the active tab component -->
 			<div>
 				<nav class="flex" aria-label="Progress">
@@ -222,17 +222,26 @@
 			</div>
 
 			<!-- Content for active interview round -->
-			<div class="col-span-2"></div>
+			<div class="col-span-2 xl:col-span-3">
+				<Feed />
+				<TextareaInput class="my-12" />
+			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-import { ChevronLeftIcon, ChevronDownIcon } from '@heroicons/vue/solid';
+import {
+	ChevronLeftIcon,
+	ChevronDownIcon,
+	CheckCircleIcon,
+} from '@heroicons/vue/solid';
+
 import Button from '../components/Button.vue';
 import Badge from '../components/Badge.vue';
-import { CheckCircleIcon } from '@heroicons/vue/solid';
+import Feed from '../components/Feed.vue';
+import TextareaInput from '../components/TextareaInput.vue';
 
 const steps = [
 	{ name: 'Round 1: Resume Review', href: '#', status: 'complete' },
