@@ -19,6 +19,18 @@ def get_all_job_postings(request):
     return Response(serializer.data)
 
 
+@api_view(["GET"])
+@login_required
+def get_all_published_postings(request):
+    title = request.GET.get('title', '')
+    postings = JobPosting.objects.prefetch_related("company").filter(is_published=True,
+                                                                     job_title__icontains=title).order_by(
+        "-created_at")
+
+    serializer = JobPostingSerializer(postings, many=True)
+    return Response(serializer.data)
+
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def create_job_posting(request):
@@ -111,11 +123,13 @@ def get_account_info(request):
         serializer = UserSerializer(get_user(request))
         return Response(serializer.data)
 
+
 @api_view(["GET"])
 def get_all_job_applications(request):
     applications = JobApplication.objects.all()
     serializer = ApplicationSerializer(applications, many=True)
     return Response(serializer.data)
+
 
 @api_view(["POST"])
 def create_application(request):

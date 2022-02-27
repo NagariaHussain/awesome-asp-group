@@ -1,4 +1,4 @@
-const webserver_port = 8000;
+const webserver_port = 8084;
 
 module.exports = {
 	'^/(api|assets|files|ws)': {

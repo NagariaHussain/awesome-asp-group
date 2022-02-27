@@ -33,3 +33,16 @@ class UserProfile(models.Model):
             languages={self.languages}
         ]
         """
+
+
+class UserAppliedJob(models.Model):
+    username = models.CharField(max_length=255)
+    applied_job_id = models.IntegerField()
+
+    def __str__(self):
+        return f"""
+        AppliedJob=[
+            username={self.username},
+            applied_job_id={self.applied_job_id}
+        ]
+        """
