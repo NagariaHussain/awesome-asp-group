@@ -94,7 +94,6 @@ export default {
 			this.applied_job_id = applied_jobs.data.map(e => e.applied_job_id);
 		},
 		async apply(element) {
-			console.log(element.id);
 			const payload = { "username": this.username, "applied_job_id": element.id };
 			await api.post(`v1/apply`, payload);
 			this.applied_job_id.push(element.id);
