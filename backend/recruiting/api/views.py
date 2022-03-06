@@ -8,6 +8,8 @@ from recruiting.models.interview import (
     InterviewEvent,
     InterviewFileAttachment,
     Interview,
+    InterviewRound,
+    Communication,
 )
 from .serializers import JobPostingSerializer, UserSerializer, ApplicationSerializer
 
@@ -28,6 +30,23 @@ def upload_interview_attachment(request):
         )
         InterviewFileAttachment.objects.create(file=file, event=interview_event)
         return Response({"message": "File uploaded successfully"})
+
+
+@api_view(["GET"])
+def get_interview_round_info(request, interview_round_id):
+    interview_round = InterviewRound.objects.get(id=interview_round_id)
+    interview_event = InterviewEvent.objects.filter(interview_round=interview_round)
+    communication = Communication.objects.filter(event__in=interview_event)
+    interview_file_attachments = InterviewFileAttachment.objects.filter(
+        event__in=interview_event
+    )
+    data = {
+        "interview_round": interview_round,
+        "interview_event": interview_event,
+        "communication": communication,
+        "interview_file_attachments": interview_file_attachments,
+    }
+    return Response(data)
 
 
 @api_view(["GET"])

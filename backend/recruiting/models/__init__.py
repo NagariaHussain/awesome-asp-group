@@ -2,7 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # import Models related to interview process
-from .interview import Interview, Communication, InterviewEvent
+from .interview import (
+    Interview,
+    Communication,
+    InterviewEvent,
+    InterviewRound,
+    InterviewFileAttachment,
+)
 
 
 class Profile(models.Model):
@@ -16,7 +22,7 @@ class Profile(models.Model):
     user_type = models.CharField(
         max_length=1, choices=UserType.choices, default=UserType.COMPANY
     )
-    avatar_image = models.FileField(upload_to='avatars/', blank=True)
+    avatar_image = models.FileField(upload_to="avatars/", blank=True)
 
     def __str__(self):
         return f"{self.user_type}:{self.user.username}"
@@ -67,7 +73,7 @@ class JobApplication(models.Model):
     status = models.CharField(
         max_length=255, choices=Status.choices, default=Status.OPEN
     )
-    expected_salary = models.IntegerField()
+    expected_salary = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

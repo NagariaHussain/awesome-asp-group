@@ -1,10 +1,6 @@
 from django.db import models
 
 
-# DO THE UI FIRST!
-# DON"T WORRY ABOUT THE BACKEND!
-
-
 class Interview(models.Model):
     class InterviewStatus(models.TextChoices):
         """Options for Interview Status"""
@@ -25,6 +21,12 @@ class Interview(models.Model):
     )
 
 
+class InterviewRound(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+    index = models.IntegerField(default=0)
+
+
 class InterviewEvent(models.Model):
     class InterviewEventType(models.TextChoices):
         """Options for event type"""
@@ -36,7 +38,9 @@ class InterviewEvent(models.Model):
 
     type = models.CharField(choices=InterviewEventType.choices, max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
-    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+    interview_round = models.ForeignKey(
+        InterviewRound, on_delete=models.CASCADE, null=True
+    )
 
 
 class Communication(models.Model):
