@@ -4,6 +4,7 @@ from django.db import models
 # DO THE UI FIRST!
 # DON"T WORRY ABOUT THE BACKEND!
 
+
 class Interview(models.Model):
     class InterviewStatus(models.TextChoices):
         """Options for Interview Status"""
@@ -24,9 +25,21 @@ class Interview(models.Model):
     )
 
 
-class Communication(models.Model):
-    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
-    body = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
-    sender = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+class InterviewEvent(models.Model):
+    class InterviewEventType(models.TextChoices):
+        """Options for event type"""
 
+        STARTED = "started", "Started"
+        INTERNAL_COMMENT = "internal_comment", "Internal Comment"
+        FILE_ATTACHED = "file_attached", "File Attached"
+        ASSIGNMENT = "assignment", "Assignment"
+
+    type = models.CharField(choices=InterviewEventType.choices, max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+
+
+class Communication(models.Model):
+    body = models.TextField()
+    sender = models.OneToOneField("auth.User", on_delete=models.CASCADE)
+    event = models.OneToOneField(InterviewEvent, on_delete=models.CASCADE, null=True)

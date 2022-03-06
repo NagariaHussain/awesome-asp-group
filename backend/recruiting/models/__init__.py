@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # import Models related to interview process
-from .interview import Interview, Communication
+from .interview import Interview, Communication, InterviewEvent
 
 
 class Profile(models.Model):
