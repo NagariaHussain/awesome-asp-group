@@ -43,3 +43,8 @@ class Communication(models.Model):
     body = models.TextField()
     sender = models.OneToOneField("auth.User", on_delete=models.CASCADE)
     event = models.OneToOneField(InterviewEvent, on_delete=models.CASCADE, null=True)
+
+
+class InterviewFileAttachment(models.Model):
+    file = models.FileField()
+    event = models.OneToOneField(InterviewEvent, on_delete=models.CASCADE)

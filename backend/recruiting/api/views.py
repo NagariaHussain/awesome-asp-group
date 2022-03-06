@@ -4,11 +4,30 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 from recruiting.models import JobPosting, JobApplication, Profile
+from recruiting.models.interview import (
+    InterviewEvent,
+    InterviewFileAttachment,
+    Interview,
+)
 from .serializers import JobPostingSerializer, UserSerializer, ApplicationSerializer
 
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, get_user, logout
+
+
+@api_view(["POST"])
+def upload_interview_attachment(request):
+    file = request.FILES.get("uploaded_file")
+    if not file:
+        return Response("No file uploaded", status=400)
+    else:
+        interview = Interview.objects.get(id=1)
+        interview_event = InterviewEvent.objects.create(
+            type="file_attached", interview=interview
+        )
+        InterviewFileAttachment.objects.create(file=file, event=interview_event)
+        return Response({"message": "File uploaded successfully"})
 
 
 @api_view(["GET"])
@@ -22,10 +41,12 @@ def get_all_job_postings(request):
 @api_view(["GET"])
 @login_required
 def get_all_published_postings(request):
-    title = request.GET.get('title', '')
-    postings = JobPosting.objects.prefetch_related("company").filter(is_published=True,
-                                                                     job_title__icontains=title).order_by(
-        "-created_at")
+    title = request.GET.get("title", "")
+    postings = (
+        JobPosting.objects.prefetch_related("company")
+        .filter(is_published=True, job_title__icontains=title)
+        .order_by("-created_at")
+    )
 
     serializer = JobPostingSerializer(postings, many=True)
     return Response(serializer.data)
