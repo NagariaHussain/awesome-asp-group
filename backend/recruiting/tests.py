@@ -32,19 +32,22 @@ class InterviewTestCase(TestCase):
             application=self.test_job_application
         )
 
-        self.test_interview_round_1 = InterviewRound.objects.create(
-            interview=self.test_interview, index=1
-        )
-
-        self.test_interview_round_2 = InterviewRound.objects.create(
-            interview=self.test_interview, index=2
-        )
-
-        self.test_interview_round_3 = InterviewRound.objects.create(
-            interview=self.test_interview, index=3
-        )
+        self.test_interview_rounds = {}
+        for i in range(1, 4):
+            self.test_interview_rounds[i] = InterviewRound.objects.create(
+                interview=self.test_interview, index=i
+            )
 
     def test_get_interview_rounds(self):
-        rounds = InterviewRound.objects.filter(interview=self.test_interview)
+        # Get the rounds for the test interview
+        rounds = InterviewRound.objects.filter(interview=self.test_interview).order_by(
+            "index"
+        )
 
+        # There are 3 rounds
         self.assertEqual(len(rounds), 3)
+
+        # Order should be same
+        self.assertEqual(rounds[0], self.test_interview_rounds[1])
+        self.assertEqual(rounds[1], self.test_interview_rounds[2])
+        self.assertEqual(rounds[2], self.test_interview_rounds[3])
