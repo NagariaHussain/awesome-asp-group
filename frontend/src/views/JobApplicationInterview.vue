@@ -13,15 +13,17 @@ const steps = [
 	{ name: 'Round 3: Culture Fit', href: '#', status: 'upcoming' },
 ];
 
-function commentSubmitted(comment) {
+function commentSubmitted() {
 	loading.value = true;
 	$api.post('/interview/post_comment', {
-		comment,
-	}).then((d) => {
-		console.log(d);
-		loading.value = false;
-		commentValue.value = '';
-	}).catch(e => console.error(e));
+		comment: commentValue.value,
+	})
+		.then((d) => {
+			console.log(d);
+			loading.value = false;
+			commentValue.value = '';
+		})
+		.catch((e) => console.error(e));
 }
 </script>
 

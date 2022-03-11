@@ -1,5 +1,6 @@
 import json
 import time
+from django.forms import FileField
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
@@ -56,19 +57,27 @@ def post_interview_comment(request):
 
 
 @api_view(["GET"])
-def get_interview_round_info(request, interview_round_id):
+def get_interview_round_details(request, interview_round_id):
     interview_round = InterviewRound.objects.get(id=interview_round_id)
     interview_event = InterviewEvent.objects.filter(interview_round=interview_round)
-    communication = Communication.objects.filter(event__in=interview_event)
     interview_file_attachments = InterviewFileAttachment.objects.filter(
         event__in=interview_event
     )
+
+    communications = [
+        (i.type, i.communication.body)
+        for i in interview_event
+        if hasattr(i, "communication")
+    ]
+
     data = {
-        "interview_round": interview_round,
-        "interview_event": interview_event,
-        "communication": communication,
-        "interview_file_attachments": interview_file_attachments,
+        # "interview_round": interview_round,
+        "interview_event": [[i.id, i.type] for i in interview_event],
+        "communication": communications,
+        "interview_file_attachments": [a.file.url for a in interview_file_attachments],
     }
+
+    print(data)
     return Response(data)
 
 
