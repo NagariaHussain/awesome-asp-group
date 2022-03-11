@@ -24,9 +24,9 @@ def upload_interview_attachment(request):
     if not file:
         return Response("No file uploaded", status=400)
     else:
-        interview = Interview.objects.get(id=1)
+        interview_round = InterviewRound.objects.get(id=1)
         interview_event = InterviewEvent.objects.create(
-            type="file_attached", interview=interview
+            type="file_attached", interview_round=interview_round
         )
         InterviewFileAttachment.objects.create(file=file, event=interview_event)
         return Response({"message": "File uploaded successfully"})
