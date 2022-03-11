@@ -8,7 +8,7 @@
 			/>
 		</div>
 		<div class="min-w-0 flex-1">
-			<form action="#">
+			<form @submit.prevent="onSubmit">
 				<div
 					class="border-b border-gray-200 focus-within:border-sky-600"
 				>
@@ -16,6 +16,8 @@
 						>Add your comment</label
 					>
 					<textarea
+						v-model="modelValue"
+						@input="onInput"
 						rows="3"
 						name="comment"
 						id="comment"
@@ -48,10 +50,11 @@
 					</div>
 					<div class="flex-shrink-0">
 						<button
+							:disabled="loading"
 							type="submit"
-							class="inline-flex items-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+							class="inline-flex items-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 disabled:bg-slate-500 disabled:ring-0"
 						>
-							Post
+							{{ !loading ? 'Post' : 'Post' }}
 						</button>
 					</div>
 				</div>
@@ -64,9 +67,17 @@
 import { ref, inject } from 'vue';
 import { PaperClipIcon } from '@heroicons/vue/outline';
 
+// Emits
+const props = defineProps({
+	modelValue: String,
+	loading: { type: Boolean, default: false },
+});
+const emit = defineEmits(['update:modelValue', 'submit']);
+
 // declare a ref to hold the element reference
 // the name must match template ref value
 const attach_file_input = ref(null);
+const inputValue = ref('');
 const api = inject('$api');
 
 const attachFile = () => attach_file_input.value.click();
@@ -85,4 +96,13 @@ const handleFileUpload = (e) => {
 		console.log(response);
 	});
 };
+
+function onInput(event) {
+	const inputValue = event.target.value;
+	emit('update:modelValue', inputValue);
+}
+
+function onSubmit() {
+	emit('submit', inputValue.value);
+}
 </script>

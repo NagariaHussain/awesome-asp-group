@@ -1,14 +1,28 @@
 <script setup>
 import Feed from '../components/Feed.vue';
 import TextareaInput from '../components/TextareaInput.vue';
-
+import { ref, inject } from 'vue';
 import { CheckCircleIcon } from '@heroicons/vue/solid';
 
+const loading = ref(false);
+const commentValue = ref('');
+const $api = inject('$api');
 const steps = [
 	{ name: 'Round 1: Resume Review', href: '#', status: 'complete' },
 	{ name: 'Round 2: Flask Test', href: '#', status: 'current' },
 	{ name: 'Round 3: Culture Fit', href: '#', status: 'upcoming' },
 ];
+
+function commentSubmitted(comment) {
+	loading.value = true;
+	$api.post('/interview/post_comment', {
+		comment,
+	}).then((d) => {
+		console.log(d);
+		loading.value = false;
+		commentValue.value = '';
+	}).catch(e => console.error(e));
+}
 </script>
 
 <template>
@@ -83,7 +97,12 @@ const steps = [
 
 		<div class="col-span-2 xl:col-span-3">
 			<Feed />
-			<TextareaInput class="my-12" />
+			<TextareaInput
+				v-model="commentValue"
+				@submit="commentSubmitted"
+				:loading="loading"
+				class="my-12"
+			/>
 		</div>
 	</div>
 </template>

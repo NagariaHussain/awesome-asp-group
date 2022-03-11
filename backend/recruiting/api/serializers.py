@@ -1,4 +1,9 @@
-from rest_framework.serializers import ModelSerializer, ReadOnlyField
+from rest_framework.serializers import (
+    ModelSerializer,
+    ReadOnlyField,
+    CharField,
+    Serializer,
+)
 from recruiting.models import JobPosting, Profile
 from django.contrib.auth import models as auth_models
 from recruiting.models import JobApplication
@@ -7,7 +12,7 @@ from recruiting.models import JobApplication
 class JobPostingSerializer(ModelSerializer):
     class Meta:
         model = JobPosting
-        company_name = ReadOnlyField(source='company.name')
+        company_name = ReadOnlyField(source="company.name")
         fields = [
             "id",
             "job_title",
@@ -41,3 +46,7 @@ class ApplicationSerializer(ModelSerializer):
     class Meta:
         model = JobApplication
         fields = "__all__"
+
+
+class CommentSerializer(Serializer):
+    comment = CharField(max_length=500)

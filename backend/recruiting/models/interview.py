@@ -45,7 +45,7 @@ class InterviewEvent(models.Model):
 
 class Communication(models.Model):
     body = models.TextField()
-    sender = models.OneToOneField("auth.User", on_delete=models.CASCADE)
+    sender = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     event = models.OneToOneField(InterviewEvent, on_delete=models.CASCADE, null=True)
 
 

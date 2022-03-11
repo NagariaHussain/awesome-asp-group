@@ -1,4 +1,5 @@
 import json
+import time
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
@@ -11,7 +12,12 @@ from recruiting.models.interview import (
     InterviewRound,
     Communication,
 )
-from .serializers import JobPostingSerializer, UserSerializer, ApplicationSerializer
+from .serializers import (
+    JobPostingSerializer,
+    UserSerializer,
+    ApplicationSerializer,
+    CommentSerializer,
+)
 
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -30,6 +36,23 @@ def upload_interview_attachment(request):
         )
         InterviewFileAttachment.objects.create(file=file, event=interview_event)
         return Response({"message": "File uploaded successfully"})
+
+
+@api_view(["POST"])
+def post_interview_comment(request):
+    comment = CommentSerializer(data=request.data)
+    if not comment.is_valid():
+        return Response(comment.errors, status=400)
+    else:
+        time.sleep(1)  # To test loading
+        interview_round = InterviewRound.objects.get(id=1)
+        interview_event = InterviewEvent.objects.create(
+            type="internal_comment", interview_round=interview_round
+        )
+        Communication.objects.create(
+            body=comment.data["comment"], sender=request.user, event=interview_event
+        )
+        return Response({"message": "Comment posted successfully"})
 
 
 @api_view(["GET"])
