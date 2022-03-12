@@ -3,6 +3,7 @@ from rest_framework.serializers import (
     ReadOnlyField,
     CharField,
     Serializer,
+    SerializerMethodField,
 )
 from recruiting.models import JobPosting, Profile
 from recruiting.models.interview import (
@@ -78,6 +79,11 @@ class CommunicationSerializer(ModelSerializer):
 
 
 class InterviewFileAttachmentSerializer(ModelSerializer):
+    file = SerializerMethodField()
+
+    def get_file(self, obj):
+        return {"name": obj.file.name, "url": obj.file.url}
+
     class Meta:
         model = InterviewFileAttachment
         fields = ("id", "file")
