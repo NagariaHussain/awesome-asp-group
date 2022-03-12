@@ -5,6 +5,12 @@ from rest_framework.serializers import (
     Serializer,
 )
 from recruiting.models import JobPosting, Profile
+from recruiting.models.interview import (
+    InterviewRound,
+    InterviewEvent,
+    InterviewFileAttachment,
+    Communication,
+)
 from django.contrib.auth import models as auth_models
 from recruiting.models import JobApplication
 
@@ -31,7 +37,7 @@ class JobPostingSerializer(ModelSerializer):
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
-        fields = ["user_type"]
+        fields = ["user_type", "avatar_image"]
 
 
 class UserSerializer(ModelSerializer):
@@ -48,5 +54,37 @@ class ApplicationSerializer(ModelSerializer):
         fields = "__all__"
 
 
+# Interview Related Serializers
+
+
 class CommentSerializer(Serializer):
     comment = CharField(max_length=500)
+
+
+class InterviewRoundSerializer(ModelSerializer):
+    class Meta:
+        model = InterviewRound
+        fields = ("id", "index", "status", "name")
+
+
+class CommunicationSerializer(ModelSerializer):
+    sender = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Communication
+        fields = ("body", "sender")
+
+
+class InterviewFileAttachmentSerializer(ModelSerializer):
+    class Meta:
+        model = InterviewFileAttachment
+        fields = ("id", "file")
+
+
+class InterviewEventSerializer(ModelSerializer):
+    communication = CommunicationSerializer()
+    attachment = InterviewFileAttachmentSerializer()
+
+    class Meta:
+        model = InterviewEvent
+        fields = ("id", "type", "created_at", "communication", "attachment")

@@ -22,9 +22,27 @@ class Interview(models.Model):
 
 
 class InterviewRound(models.Model):
+    class InterviewRoundStatus(models.TextChoices):
+        """Options for Interview Round Status"""
+
+        NOT_STARTED = "not_started", "Not Started"
+        IN_PROGRESS = "in_progress", "In Progress"
+        COMPLETED = "completed", "Completed"
+
     created_at = models.DateTimeField(auto_now_add=True)
     interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
     index = models.IntegerField(default=0)
+    status = models.CharField(
+        max_length=25,
+        choices=InterviewRoundStatus.choices,
+        default=InterviewRoundStatus.NOT_STARTED,
+    )
+    name = models.CharField(max_length=100, default="")
+
+    def save(self, *args, **kwargs):
+        if not self.name:
+            self.name = f"Round {self.index + 1}"
+        super(InterviewRound, self).save(*args, **kwargs)
 
 
 class InterviewEvent(models.Model):
@@ -51,4 +69,6 @@ class Communication(models.Model):
 
 class InterviewFileAttachment(models.Model):
     file = models.FileField()
-    event = models.OneToOneField(InterviewEvent, on_delete=models.CASCADE)
+    event = models.OneToOneField(
+        InterviewEvent, on_delete=models.CASCADE, related_name="attachment"
+    )
