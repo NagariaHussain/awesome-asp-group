@@ -30,7 +30,9 @@ class InterviewRound(models.Model):
         COMPLETED = "completed", "Completed"
 
     created_at = models.DateTimeField(auto_now_add=True)
-    interview = models.ForeignKey(Interview, on_delete=models.CASCADE)
+    interview = models.ForeignKey(
+        Interview, on_delete=models.CASCADE, related_name="rounds"
+    )
     index = models.IntegerField(default=0)
     status = models.CharField(
         max_length=25,
