@@ -42,7 +42,20 @@ class InterviewRound(models.Model):
     def save(self, *args, **kwargs):
         if not self.name:
             self.name = f"Round {self.index + 1}"
+
         super(InterviewRound, self).save(*args, **kwargs)
+
+    def start(self):
+        if self.status != self.InterviewRoundStatus.NOT_STARTED:
+            return
+
+        InterviewEvent.objects.create(
+            interview_round=self,
+            type=InterviewEvent.InterviewEventType.STARTED,
+        )
+
+        self.status = self.InterviewRoundStatus.IN_PROGRESS
+        self.save()
 
 
 class InterviewEvent(models.Model):
@@ -57,7 +70,7 @@ class InterviewEvent(models.Model):
     type = models.CharField(choices=InterviewEventType.choices, max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     interview_round = models.ForeignKey(
-        InterviewRound, on_delete=models.CASCADE, null=True
+        InterviewRound, on_delete=models.CASCADE, null=True, related_name="events"
     )
 
 
