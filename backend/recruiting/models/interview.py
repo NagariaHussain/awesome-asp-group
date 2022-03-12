@@ -72,3 +72,29 @@ class InterviewFileAttachment(models.Model):
     event = models.OneToOneField(
         InterviewEvent, on_delete=models.CASCADE, related_name="attachment"
     )
+
+
+class InterviewRoundAssignment(models.Model):
+    interview_round = models.ForeignKey(
+        InterviewRound, on_delete=models.CASCADE, related_name="assignments"
+    )
+    assignee = models.ForeignKey(
+        "auth.User", on_delete=models.CASCADE, related_name="assignments"
+    )
+
+
+class InterviewRoundAssignmentEvent(models.Model):
+    event = models.OneToOneField(
+        InterviewEvent, on_delete=models.CASCADE, related_name="assignment_event"
+    )
+    assignment = models.OneToOneField(
+        InterviewRoundAssignment, on_delete=models.CASCADE, related_name="assignment"
+    )
+
+    def create_assignment(self, interview_round, assignee):
+        assignment = InterviewRoundAssignment(
+            interview_round=interview_round, assignee=assignee
+        )
+        assignment.save()
+        self.assignment = assignment
+        self.save()

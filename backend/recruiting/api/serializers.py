@@ -10,6 +10,8 @@ from recruiting.models.interview import (
     InterviewEvent,
     InterviewFileAttachment,
     Communication,
+    InterviewRoundAssignment,
+    InterviewRoundAssignmentEvent,
 )
 from django.contrib.auth import models as auth_models
 from recruiting.models import JobApplication
@@ -81,10 +83,34 @@ class InterviewFileAttachmentSerializer(ModelSerializer):
         fields = ("id", "file")
 
 
+class InterviewRoundAssignmentSerializer(ModelSerializer):
+    assignee = UserSerializer(read_only=True)
+
+    class Meta:
+        model = InterviewRoundAssignment
+        fields = ("id", "assignee")
+
+
+class InterviewRoundAssignmentEventSerializer(ModelSerializer):
+    assignment = InterviewRoundAssignmentSerializer()
+
+    class Meta:
+        model = InterviewRoundAssignmentEvent
+        fields = ["assignment"]
+
+
 class InterviewEventSerializer(ModelSerializer):
     communication = CommunicationSerializer()
     attachment = InterviewFileAttachmentSerializer()
+    assignment_event = InterviewRoundAssignmentEventSerializer()
 
     class Meta:
         model = InterviewEvent
-        fields = ("id", "type", "created_at", "communication", "attachment")
+        fields = (
+            "id",
+            "type",
+            "created_at",
+            "communication",
+            "attachment",
+            "assignment_event",
+        )

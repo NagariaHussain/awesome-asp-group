@@ -11,6 +11,8 @@ from recruiting.models.interview import (
     Interview,
     InterviewRound,
     Communication,
+    InterviewRoundAssignment,
+    InterviewRoundAssignmentEvent,
 )
 from .serializers import (
     JobPostingSerializer,
@@ -57,6 +59,19 @@ def post_interview_comment(request):
             body=comment.data["comment"], sender=request.user, event=interview_event
         )
         return Response({"message": "Comment posted successfully"})
+
+
+@api_view(["POST"])
+def create_interview_round_assignment(request):
+    # TODO: get round and assignee (username) from request body
+    interview_round = InterviewRound.objects.get(id=1)
+    event = InterviewEvent.objects.create(
+        type="assignment", interview_round=interview_round
+    )
+    assignee = request.user
+    interview_round_assignment_event = InterviewRoundAssignmentEvent(event=event)
+    interview_round_assignment_event.create_assignment(interview_round, assignee)
+    return Response({"message": "Interview round assigned successfully"})
 
 
 @api_view(["GET"])
