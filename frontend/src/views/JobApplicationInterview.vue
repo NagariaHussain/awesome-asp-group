@@ -1,30 +1,14 @@
 <script setup>
-import Feed from '../components/Feed.vue';
-import TextareaInput from '../components/TextareaInput.vue';
-import { ref, inject } from 'vue';
+import RoundEventsFeed from '../components/RoundEventsFeed.vue';
+import Button from '../components/Button.vue';
 import { CheckCircleIcon } from '@heroicons/vue/solid';
 
-const loading = ref(false);
-const commentValue = ref('');
-const $api = inject('$api');
+// TODO: Later, get these from the API
 const steps = [
 	{ name: 'Round 1: Resume Review', href: '#', status: 'complete' },
 	{ name: 'Round 2: Flask Test', href: '#', status: 'current' },
 	{ name: 'Round 3: Culture Fit', href: '#', status: 'upcoming' },
 ];
-
-function commentSubmitted() {
-	loading.value = true;
-	$api.post('/interview/post_comment', {
-		comment: commentValue.value,
-	})
-		.then((d) => {
-			console.log(d);
-			loading.value = false;
-			commentValue.value = '';
-		})
-		.catch((e) => console.error(e));
-}
 </script>
 
 <template>
@@ -98,13 +82,14 @@ function commentSubmitted() {
 		</div>
 
 		<div class="col-span-2 xl:col-span-3">
-			<Feed />
-			<TextareaInput
-				v-model="commentValue"
-				@submit="commentSubmitted"
-				:loading="loading"
-				class="my-12"
-			/>
+			<Suspense>
+				<!-- component with nested async dependencies -->
+				<RoundEventsFeed :roundId="1" />
+				<!-- loading state via #fallback slot -->
+				<template #fallback>
+					<Button :loading="true">Loading...</Button>
+				</template>
+			</Suspense>
 		</div>
 	</div>
 </template>
