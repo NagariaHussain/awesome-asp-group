@@ -71,8 +71,9 @@ import { PaperClipIcon } from '@heroicons/vue/outline';
 const props = defineProps({
 	modelValue: String,
 	loading: { type: Boolean, default: false },
+	roundId: Number,
 });
-const emit = defineEmits(['update:modelValue', 'submit']);
+const emit = defineEmits(['update:modelValue', 'submit', 'fileUploaded']);
 
 // declare a ref to hold the element reference
 // the name must match template ref value
@@ -88,11 +89,12 @@ const handleFileUpload = (e) => {
 	formData.append('uploaded_file', file);
 
 	// Use axios to upload the file
-	api.post('/upload-interview-attachment', formData, {
+	api.post(`/interview/upload_attachment/${props.roundId}`, formData, {
 		headers: {
 			'Content-Type': 'multipart/form-data',
 		},
 	}).then((response) => {
+		emit('fileUploaded', response.data);
 		console.log(response);
 	});
 };

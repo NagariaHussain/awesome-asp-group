@@ -83,6 +83,7 @@ class Communication(models.Model):
 
 
 class InterviewFileAttachment(models.Model):
+    uploader = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     file = models.FileField()
     event = models.OneToOneField(
         InterviewEvent, on_delete=models.CASCADE, related_name="attachment"

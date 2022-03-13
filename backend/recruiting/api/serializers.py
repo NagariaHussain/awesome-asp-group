@@ -80,13 +80,14 @@ class CommunicationSerializer(ModelSerializer):
 
 class InterviewFileAttachmentSerializer(ModelSerializer):
     file = SerializerMethodField()
+    uploader = UserSerializer(read_only=True)
 
     def get_file(self, obj):
         return {"name": obj.file.name, "url": obj.file.url}
 
     class Meta:
         model = InterviewFileAttachment
-        fields = ("id", "file")
+        fields = ("id", "file", "uploader")
 
 
 class InterviewRoundAssignmentSerializer(ModelSerializer):

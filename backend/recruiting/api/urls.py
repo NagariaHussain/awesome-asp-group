@@ -16,7 +16,10 @@ urlpatterns = [
     ##################
     # Interview routes
     ##################
-    path("interview/upload_attachment", views.upload_interview_attachment),
+    path(
+        "interview/upload_attachment/<int:interview_round_id>",
+        views.upload_interview_attachment,
+    ),
     path("interview/post_comment", views.post_interview_comment),
     path(
         "interview/rounds/<int:interview_round_id>", views.get_interview_round_details

@@ -163,9 +163,73 @@ async function commentSubmitted() {
 							</div>
 						</template>
 
-						<!-- <template v-else>
+						<template
+							v-else-if="activityItem.type === 'file_attached'"
+						>
+							<div>
+								<div class="relative px-1">
+									<div
+										class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white"
+									>
+										<PaperClipIcon
+											class="h-5 w-5 text-gray-500"
+											aria-hidden="true"
+										/>
+									</div>
+								</div>
+							</div>
+							<div class="min-w-0 flex-1 py-0">
+								<div class="text-sm leading-8 text-gray-500">
+									<span class="mr-0.5">
+										<a
+											:href="
+												activityItem.attachment.uploader
+											"
+											class="font-medium text-gray-900"
+											>{{
+												activityItem.attachment.uploader
+													.first_name
+											}}
+											{{
+												activityItem.attachment.uploader
+													.last_name
+											}}</a
+										>
+										{{ ' ' }}
+										attached file
+									</span>
+									{{ ' ' }}
+									<span class="mr-0.5">
+										<a
+											:href="
+												activityItem.attachment.file.url
+											"
+											class="relative inline-flex items-center rounded-full border border-gray-300 px-3 py-0.5 text-sm"
+										>
+											<span
+												class="font-medium text-gray-900"
+												>{{
+													activityItem.attachment.file
+														.name
+												}}</span
+											>
+										</a>
+									</span>
+									<span class="ml-1 whitespace-nowrap"
+										>{{
+											getFormattedRelativeDate(
+												activityItem.created_at
+											)
+										}}
+										ago</span
+									>
+								</div>
+							</div>
+						</template>
+
+						<template v-else>
 							<pre>{{ activityItem }}</pre>
-						</template> -->
+						</template>
 					</div>
 				</div>
 			</li>
@@ -175,7 +239,9 @@ async function commentSubmitted() {
 	<TextareaInput
 		v-model="commentValue"
 		@submit="commentSubmitted"
+		@fileUploaded="(e) => fetchRoundDetails()"
 		:loading="loading"
 		class="my-12"
+		:roundId="roundId"
 	/>
 </template>

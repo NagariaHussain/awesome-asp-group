@@ -31,16 +31,18 @@ from django.contrib.auth import authenticate, login, get_user, logout
 
 
 @api_view(["POST"])
-def upload_interview_attachment(request):
+def upload_interview_attachment(request, interview_round_id):
     file = request.FILES.get("uploaded_file")
     if not file:
         return Response("No file uploaded", status=400)
     else:
-        interview_round = InterviewRound.objects.get(id=1)
+        interview_round = InterviewRound.objects.get(id=interview_round_id)
         interview_event = InterviewEvent.objects.create(
             type="file_attached", interview_round=interview_round
         )
-        InterviewFileAttachment.objects.create(file=file, event=interview_event)
+        InterviewFileAttachment.objects.create(
+            file=file, event=interview_event, uploader=request.user
+        )
         return Response({"message": "File uploaded successfully"})
 
 
